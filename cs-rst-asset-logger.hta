@@ -1,0 +1,152 @@
+<html>
+<head>
+<title>RST CS - Asset Logger</title>
+<HTA:APPLICATION
+  APPLICATIONNAME="RST CS Asset Logger"
+  ID="RST-CS-Asset-Logger"
+  caption="yes"
+  showMinimized="no"
+  MAXIMIZEBUTTON="yes"
+  status="yes"
+  VERSION="1.0"/>
+</head>
+ 
+<script language="VBScript">
+option explicit
+ 
+dim strComputer, objWMIService, wshShell
+dim Computername
+dim IPitems, IPitem, IPitemStr, ipAddr, ipsubnet, macaddr, description
+dim ComputerSettings, objComputer, CompManufacturer, CompModel, CompModel2
+dim SerialItems, SerialItem, SerialNumber
+dim SoftwareData, objFSO, objOperatingSystem, colOperatingSystems, file
+ 
+
+strComputer = "."
+Set wshShell = CreateObject( "WScript.Shell" )
+Set objWMIService = GetObject("winmgmts:\\" & strComputer & "\root\CIMV2")
+ 
+ComputerName = wshShell.ExpandEnvironmentStrings("%COMPUTERNAME%")
+ 
+Set IPitems = objWMIService.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled=True and NOT (description like '%vmware%' OR description like '%virtual%')")
+For Each IPitem In IPitems
+    ipAddr=IPitem.IPAddress(0)
+    ipsubnet=Join(IPitem.IPSubnet, ",")
+    description=IPitem.description
+    macaddr=IPitem.MACAddress
+Next
+ 
+Set ComputerSettings = objWMIService.ExecQuery ("Select * from Win32_ComputerSystem")
+For Each objComputer in ComputerSettings
+    CompManufacturer=objComputer.Manufacturer
+    CompModel=objComputer.Model
+Next
+ 
+Set SerialItems = objWMIService.ExecQuery( "SELECT * FROM Win32_ComputerSystemProduct")
+For Each SerialItem in SerialItems
+    SerialNumber = SerialItem.IdentifyingNumber
+    CompModel2 = SerialItem.Name
+Next
+
+SoftwareData=vbcrlf & "Host Software Information :" & vbcrlf
+Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\" & strComputer & "\root\cimv2")
+
+Set colOperatingSystems = objWMIService.ExecQuery ("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+    SoftwareData = objOperatingSystem.Caption & vbcrlf
+next
+
+
+<!-- 
+Sub logAsset
+    Dim objFSO, objFile, strFileName, objShell
+    strFileName = "data.csv"
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+    Set objFile = objFSO.OpenTextFile(strFileName, 2, true)
+    Set objShell = CreateObject("WScript.Shell")
+    objFile.write CompManufacturer & vbCRLF
+
+
+    msgbox "This asset has now been logged.",vbInformation, "Asset Logged"
+end sub
+ 
+
+ -->
+</script>
+ 
+<style type="text/css">
+body {
+margin : 2%;
+padding : 2%;
+background-color : #white;
+color : #000000;
+}
+ 
+p, ul, ol, li {
+font : 11pt Arial,geneva,helvetica;
+text-align: left;
+}
+ 
+h1 {
+    font : 16pt, "Arial",sans-serif;
+    text-align: right;
+    color: #003366;
+    font-size: 2em;
+    padding-right: 1cm;
+    vertical-align: bottom;
+}
+ 
+h2 {
+    font : 12pt, "Arial",sans-serif;
+    text-align: left;
+    color: #003366;
+    font-size: 1.2em;
+    padding-right: 1cm;
+    vertical-align: bottom;
+}
+ 
+table, td, th {
+     font : 11pt Arial,geneva,helvetica;
+     border: 0px solid black;
+     border-spacing: 4px;
+     cell-padding: 2px;
+}
+ 
+</style>
+
+<p align="left"><h1>Computer Science RST Asset Logger</h1></p>
+<!--     document.write("<tr><td>Asset ID <b>(FILL ME)</b>:</td> <td><input type='text' id='assetNo' name='assetNo'></td> </tr>"); -->
+
+
+
+<script type="text/javascript">
+    document.write("<table style='width:80%' align='center'>");
+    document.write("<tr><td>Computer name</td> <td><b>" + ComputerName + "</b></td> </tr>");
+    document.write("<tr><td>IP Address</td> <td>" + ipAddr + "</td> </tr>");
+    document.write("<tr><td>MAC</td> <td>" + macaddr + "</td> </tr>");
+    document.write("<tr><td>Serial Number</td> <td>" + SerialNumber + "</td> </tr>");
+    document.write("<tr><td>Manufacturer</td> <td>" + CompManufacturer + "</td> </tr>");
+    document.write("<tr><td>Model </td> <td>" + CompModel + "</td> </tr>");
+    document.write("<tr><td>Alternate Model </td> <td>" + CompModel2 + "</td> </tr>");
+    document.write("<tr><td>OS </td> <td>" + SoftwareData + "</td> </tr>");
+    document.write("</table>");
+</script>
+ 
+<p><b>Double check that all of the above values are correct before scanning the QR Code.</b></p>
+ 
+
+<!-- <script type="text/javascript">
+        document.write("<p><center><button type=\"button\" onclick=\"logAsset\">Log Asset</button></center></p>");      
+</script>
+ -->
+<script  type="text/javascript" src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<div  align="center" id="qrcode"></div>
+<script type="text/javascript">
+	new QRCode(document.getElementById("qrcode"), ComputerName + "," + ipAddr + "," + macaddr + "," + SerialNumber + "," + CompManufacturer + "," + CompModel + "," + CompModel2 + "," + SoftwareData);
+</script>
+
+</body>
+</html>
+
+
