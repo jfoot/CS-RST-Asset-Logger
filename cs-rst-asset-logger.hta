@@ -56,36 +56,19 @@ For Each objOperatingSystem in colOperatingSystems
     SoftwareData = objOperatingSystem.Caption & vbcrlf
 next
 
-
-<!-- 
-Sub logAsset
-    Dim objFSO, objFile, strFileName, objShell
-    strFileName = "data.csv"
-    Set objFSO = CreateObject("Scripting.FileSystemObject")
-
-    Set objFile = objFSO.OpenTextFile(strFileName, 2, true)
-    Set objShell = CreateObject("WScript.Shell")
-    objFile.write CompManufacturer & vbCRLF
-
-
-    msgbox "This asset has now been logged.",vbInformation, "Asset Logged"
-end sub
- 
-
- -->
 </script>
  
 <style type="text/css">
 body {
-margin : 2%;
-padding : 2%;
-background-color : #white;
-color : #000000;
+    margin : 2%;
+    padding : 2%;
+    background-color : #white;
+    color : #000000;
 }
  
 p, ul, ol, li {
-font : 11pt Arial,geneva,helvetica;
-text-align: left;
+    font : 11pt Arial,geneva,helvetica;
+    text-align: left;
 }
  
 h1 {
@@ -143,7 +126,30 @@ table, td, th {
 <script  type="text/javascript" src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 <div  align="center" id="qrcode"></div>
 <script type="text/javascript">
-	new QRCode(document.getElementById("qrcode"), ComputerName + "," + ipAddr + "," + macaddr + "," + SerialNumber + "," + CompManufacturer + "," + CompModel + "," + CompModel2 + "," + SoftwareData);
+
+ 
+    var fakeJSON = "{ " +
+        "ComputerName : " + ComputerName + ", " + 
+        "IpAddr : '" + ipAddr + "', "+
+        "MacAddr : '" + macaddr +"', "+
+        "SerialNumber : " + SerialNumber +", "+
+        "CompManufacturer : " +CompManufacturer +", "+
+        "CompModel : " +CompModel +", "+
+        "CompModelAlt : " +CompModel2 +", "+
+        "Os : '" +SoftwareData + "' " +
+    "}";
+
+
+
+    var qrcode = new QRCode("qrcode", {
+        text: fakeJSON,
+        width: 500,
+        height: 500,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+	
 </script>
 
 </body>
