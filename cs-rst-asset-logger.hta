@@ -48,12 +48,12 @@ For Each SerialItem in SerialItems
     CompModel2 = SerialItem.Name
 Next
 
-SoftwareData=vbcrlf & "Host Software Information :" & vbcrlf
+
 Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\" & strComputer & "\root\cimv2")
 
 Set colOperatingSystems = objWMIService.ExecQuery ("Select * from Win32_OperatingSystem")
 For Each objOperatingSystem in colOperatingSystems
-    SoftwareData = objOperatingSystem.Caption & vbcrlf
+    SoftwareData = objOperatingSystem.Caption 
 next
 
 </script>
@@ -73,7 +73,7 @@ p, ul, ol, li {
  
 h1 {
     font : 16pt, "Arial",sans-serif;
-    text-align: right;
+    text-align: left;
     color: #003366;
     font-size: 2em;
     padding-right: 1cm;
@@ -98,7 +98,8 @@ table, td, th {
  
 </style>
 
-<p align="left"><h1>Computer Science RST Asset Logger</h1></p>
+<p align="left"><h1>Computer Science RST Asset Logger (v1.0)</h1></p>
+<p align="left"><h2>Created by Jonathan Foot</h2></p>
 <!--     document.write("<tr><td>Asset ID <b>(FILL ME)</b>:</td> <td><input type='text' id='assetNo' name='assetNo'></td> </tr>"); -->
 
 
@@ -128,17 +129,14 @@ table, td, th {
 <script type="text/javascript">
 
  
-    var fakeJSON = "{ " +
-        "ComputerName : " + ComputerName + ", " + 
-        "IpAddr : '" + ipAddr + "', "+
-        "MacAddr : '" + macaddr +"', "+
-        "SerialNumber : " + SerialNumber +", "+
-        "CompManufacturer : " +CompManufacturer +", "+
-        "CompModel : " +CompModel +", "+
-        "CompModelAlt : " +CompModel2 +", "+
-        "Os : '" +SoftwareData + "' " +
-    "}";
-
+    var fakeJSON = "{ \"ComputerName\" : \"" + ComputerName + "\", " +
+        "\"IpAddr\" : \""  + ipAddr + "\", "+ 
+        "\"MacAddr\" : \"" + macaddr +"\", "+
+        "\"SerialNumber\" : \"" + SerialNumber +"\","+ 
+        "\"CompManufacturer\" : \"" +CompManufacturer +"\", "+
+        "\"CompModel\" : \"" +CompModel +"\", "+
+        "\"CompModelAlt\" : \"" +CompModel2 +"\", "+
+        "\"Os\" : \"" + SoftwareData + "\" }";
 
 
     var qrcode = new QRCode("qrcode", {

@@ -63,7 +63,7 @@ public class AddAsset extends AppCompatActivity {
 
     private void initialiseDetectorsAndSources() {
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .setBarcodeFormats(Barcode.CODE_39)
                 .build();
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)

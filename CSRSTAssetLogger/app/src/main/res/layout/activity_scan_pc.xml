@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.psyjpf.assetlogger.Asset" />
+            type="com.psyjpf.assetlogger.AssetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:id="@+id/grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
+            android:columnCount="1"
             android:padding="10dp"
             android:layout_margin="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,10 +30,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="0.5"
+                android:layout_columnWeight="0.3"
                 android:text="Asset Tag: "
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -41,15 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
-                android:text="@{viewmodel.AssetTag}" />
+                android:text="@{viewmodel.Asset.AssetTag}" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="0.5"
-                android:text="Computer Name: "
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
+                android:layout_columnWeight="0.3"
+                android:text="Host Name: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -57,7 +57,116 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
-                android:text="@{viewmodel.ComputerName}" />
+                android:text="@{viewmodel.Asset.ComputerName}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="MAC: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.MacAddr}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="Serial No: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.SerialNumber}" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="Manufacturer: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.CompManufacturer}" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="Model: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.CompModel}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="Model Alt: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.CompModelAlt}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.3"
+                android:text="OS Ver: "
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="@{viewmodel.Asset.Os}" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log Asset"
+                android:onClick="logAsset"
+                tools:layout_editor_absoluteX="133dp"
+                tools:layout_editor_absoluteY="656dp" />
+
+
 
 
 
@@ -92,6 +201,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
